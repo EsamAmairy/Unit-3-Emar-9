@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Future: will &amp; going to – أ. عصام عمايري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Readex+Pro:wght@400;600&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e5e9f1;
+  --hi:#f9fbff;
+  --lo:#bcc5d6;
+  --ink:#232d4b;
+  --muted:#5c6786;
+  --accent:#3a4fc9;
+  --ok:#14915f;
+  --bad:#d23a56;
+  --r-xl:30px;
+  --r-lg:24px;
+  --r-md:18px;
+  --r-sm:13px;
+  --raise:9px 9px 20px var(--lo), -9px -9px 20px var(--hi);
+  --raise-s:5px 5px 11px var(--lo), -5px -5px 11px var(--hi);
+  --press:inset 5px 5px 10px var(--lo), inset -5px -5px 10px var(--hi);
+  --wm:rgba(35,45,75,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Lexend','Readex Pro',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh;
+  padding:max(20px,env(safe-area-inset-top)) 14px calc(48px + env(safe-area-inset-bottom));
+}
+.wrap{max-width:1100px;margin:0 auto}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+.top{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:26px 22px;border-radius:var(--r-xl);box-shadow:var(--raise);margin-bottom:26px;
+}
+.top h1{font-size:1.75rem;line-height:1.22;font-weight:700;letter-spacing:-.015em}
+.top p{margin-top:12px;color:var(--muted);font-size:.95rem;font-weight:300}
+.top .done{margin-top:12px;font-weight:500;font-size:.95rem;color:var(--ink)}
+.dial{
+  position:relative;flex:none;width:110px;height:110px;border-radius:50%;
+  box-shadow:var(--raise-s);display:grid;place-items:center;
+}
+.dial::before{content:"";position:absolute;inset:11px;border-radius:50%;box-shadow:var(--press)}
+.dial svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.dial .trk{fill:none;stroke:var(--lo);stroke-opacity:.5;stroke-width:6}
+.dial .bar{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s ease}
+.dial div{position:relative;text-align:center;line-height:1.1}
+.dial b{display:block;font-size:1.9rem;font-weight:700}
+.dial small{font-size:.72rem;color:var(--muted)}
+
+.bar-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:24px;padding:0 4px}
+.bar-row .hint{flex:1 1 280px;color:var(--muted);font-size:.95rem;font-weight:300}
+.chip,.btn{
+  border:0;background:var(--bg);border-radius:var(--r-md);padding:11px 18px;
+  font-size:.95rem;font-weight:500;box-shadow:var(--raise-s);white-space:nowrap;
+}
+.chip{box-shadow:var(--press)}
+.btn{cursor:pointer;transition:box-shadow .15s;display:inline-flex;align-items:center;gap:8px}
+.btn:active{box-shadow:var(--press)}
+.btn.main{color:var(--accent)}
+.btn svg{width:18px;height:18px}
+
+.list{list-style:none;display:grid;gap:22px}
+.q{position:relative;padding:22px 18px 22px 70px;border-radius:var(--r-xl);box-shadow:var(--raise)}
+.num{
+  position:absolute;left:16px;top:18px;width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;font-size:.9rem;font-weight:500;color:var(--muted);box-shadow:var(--press);
+}
+.qt{font-size:1.05rem;line-height:1.9;overflow-wrap:anywhere}
+.pill{
+  display:inline-block;min-width:4.6rem;margin:0 4px;padding:0 14px;border-radius:var(--r-sm);
+  box-shadow:var(--raise-s);text-align:center;font-size:.92rem;line-height:1.7;color:var(--muted);
+}
+.pill[data-state="ok"]{color:var(--ok);font-weight:600}
+.pill[data-state="shown"]{color:var(--accent);font-weight:600}
+.pill[data-state="bad"]{color:var(--bad)}
+
+.opts{display:grid;gap:14px;margin-top:18px}
+.opt{
+  display:flex;align-items:center;gap:12px;text-align:left;border:0;cursor:pointer;
+  background:var(--bg);border-radius:var(--r-md);padding:13px 16px;box-shadow:var(--raise-s);
+  font-size:.98rem;transition:box-shadow .15s,color .15s;
+}
+.opt b{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:600;color:var(--muted);box-shadow:var(--press)}
+.opt:active{box-shadow:var(--press)}
+.opt.ok{box-shadow:var(--press);color:var(--ok)}
+.opt.ok b{color:var(--ok)}
+.opt.bad{box-shadow:var(--press);color:var(--bad)}
+.opt.bad b{color:var(--bad)}
+.opt.shown{box-shadow:var(--press);color:var(--accent)}
+.opt.shown b{color:var(--accent)}
+.opt[disabled]{cursor:default}
+
+.end-row{margin-top:30px;padding:22px 18px;border-radius:var(--r-xl);box-shadow:var(--press)}
+.end-btns{display:grid;grid-template-columns:1fr;gap:14px}
+.end-btns .btn{justify-content:center;padding:14px 18px}
+.result{margin-top:16px;text-align:center;font-weight:500;color:var(--muted);min-height:1.6em}
+
+footer{margin-top:40px;text-align:center;color:var(--muted);font-size:.9rem}
+footer strong{display:block;font-size:1.1rem;color:var(--ink);font-weight:600}
+
+.wm{position:fixed;inset:0;overflow:hidden;pointer-events:none;user-select:none;-webkit-user-select:none;z-index:60}
+.wm span{
+  position:absolute;white-space:nowrap;color:var(--wm);
+  font-family:'Aref Ruqaa','Readex Pro',serif;font-weight:400;font-size:2.1rem;line-height:1;
+  transform-origin:center;
+}
+
+@media (min-width:700px){
+  body{padding-left:24px;padding-right:24px}
+  .top{padding:34px 44px}
+  .top h1{font-size:2.5rem}
+  .dial{width:170px;height:170px}
+  .dial::before{inset:16px}
+  .dial b{font-size:2.5rem}
+  .q{padding:26px 34px 26px 88px}
+  .num{left:30px;top:24px}
+  .opts{grid-template-columns:1fr 1fr}
+  .end-btns{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.wm span{color:rgba(0,0,0,.12)}}
+</style>
+</head>
+<body>
+
+<div class="wm" id="wm" aria-hidden="true"></div>
+
+<main class="wrap">
+  <header class="top">
+    <div>
+      <h1>Future: will &amp; going to</h1>
+      <p>Choose the correct answer to see if you are right straight away. Your progress appears on the dial.</p>
+      <div class="done" id="answered">0 of 0 answered</div>
+    </div>
+    <div class="dial" role="img" aria-label="Correct answers">
+      <svg viewBox="0 0 100 100"><circle class="trk" cx="50" cy="50" r="42"/><circle class="bar" id="bar" cx="50" cy="50" r="42"/></svg>
+      <div><b id="score">0</b><small>correct</small></div>
+    </div>
+  </header>
+
+  <section id="panel"></section>
+
+  <footer>
+    Prepared by
+    <strong>أ. عصام عمايري</strong>
+  </footer>
+</main>
+
+<script>
+/* a = index (or array of indexes) of the accepted answer(s); the first one is shown by "Show answers" */
+const Q = [
+ {q:"Life in the future ___ be very different.", o:["was","going to","were","will"], a:3},
+ {q:"I think life in the future ___ be easy and comfortable.", o:["be going to","will","does","are going to"], a:1},
+ {q:"New medicine will improve and scientists are ___ find a cure to many diseases.", o:["will","is","do","going to"], a:3},
+ {q:"In the future E-books ___ replace traditional books.", o:["was going to","will","does","is going to"], a:1},
+ {q:"Tonight we ___ have a birthday party for my mother.", o:["was","are going to","were going to","will"], a:1},
+ {q:"The world ___ have a lot of problems with pollution.", o:["are going to","will","be going to","are doing"], a:1},
+ {q:"Futurologists predict that life ___ probably be very different.", o:["be going to","will","does","going to"], a:1},
+ {q:"World peace ___ spread everywhere.", o:["was going to","be going to","will","is going to"], a:2},
+ {q:"People ___ find other resources in the future.", o:["will","be going to","would","are going to"], a:0},
+ {q:"Look at the clouds! It ___ rain.", o:["is going to","are","were","will"], a:0},
+ {q:"People ___ explore the space to find new planets.", o:["is going to","going","will","was"], a:2},
+ {q:"In the future, people ___ live peacefully.", o:["are going","will","be going to","are doing"], a:1},
+ {q:"I ___ visit Aleppo next week.", o:["will","be going to","does","am going to"], a:3},
+ {q:"In the future, India ___ be the first largest economy.", o:["was","going to","did","will"], a:3},
+ {q:"The world population ___ be more than nine billion people.", o:["be going to","will","are going","would"], a:1},
+ {q:"Tonight she ___ stay at home and start reading.", o:["is going to","going to","were","will"], a:0},
+ {q:"Different countries ___ have nuclear weapons.", o:["be going to","will","does","is going to"], a:1},
+ {q:"Someday, there ___ be permanent settlements.", o:["going to","do","did","will"], a:3},
+ {q:"There will be gigantic space cities which ___ be very different from small towns.", o:["won't","will","doesn't","aren't"], a:1},
+ {q:"I am not free tomorrow. I ___ see the doctor.", o:["are going to","will","am going to","am doing"], a:2},
+ {q:"You ___ need to obtain permission from the teacher.", o:["were going to","do","will","are going to"], a:2},
+ {q:"She needs some rest. I think she ___ take a week off.", o:["will","doesn't","was going to","is going to"], a:0},
+ {q:"I've spilt coffee on my shirt. I ___ change it.", o:["are going to","was going to","am going to","will"], a:[2,3]},
+ {q:"We forgot to buy bread. We ___ go back to buy some.", o:["am doing","will","am going to","are going to"], a:[1,3]},
+ {q:"He ___ choose science, the branch he likes.", o:["isn't going","is going to","doesn't","will"], a:1},
+ {q:"I think Brazil ___ win the next world cup.", o:["am going to","will","are going to","is going to"], a:1},
+ {q:"Astronauts ___ cook on the moon. They will take a pill instead.", o:["are going to","will","won't","isn't going to"], a:2},
+ {q:"The phone is ringing. I ___ answer it.", o:["will","was going to","am going to","are going to"], a:0},
+ {q:"Inhabitants ___ need space-suits inside the buildings.", o:["won't","are going to","didn't","will"], a:0},
+ {q:"Scientists believe that they ___ obtain water from a large ice lake on the moon.", o:["be going to","will","is going to","would"], a:1}
+];
+
+const $ = s => document.querySelector(s);
+const make = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+const LETTERS = ['a','b','c','d'];
+const ICON_RESET = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>';
+const accepted = it => [].concat(it.a);
+
+function btn(label, cls, onclick, icon){
+  const b = make('button','btn' + (cls ? ' ' + cls : ''));
+  b.type = 'button';
+  if (icon) b.insertAdjacentHTML('beforeend', icon);
+  b.append(document.createTextNode(label));
+  b.onclick = onclick;
+  return b;
+}
+function stats(root){
+  const units = [...root.querySelectorAll('[data-unit]')];
+  return {
+    total: units.length,
+    ok: units.filter(u => u.dataset.state === 'ok').length,
+    answered: units.filter(u => u.dataset.state === 'ok' || u.dataset.tried).length
+  };
+}
+
+function build(){
+  const panel = $('#panel');
+  panel.innerHTML = '';
+  const list = make('ol','list');
+
+  Q.forEach((it, i) => {
+    const li = make('li','q');
+    li.dataset.unit = '1';
+    li.append(make('span','num', i + 1));
+    const p = make('p','qt');
+    const [a, b] = it.q.split('___');
+    const slot = make('span','pill','......');
+    p.append(document.createTextNode(a), slot, document.createTextNode(b));
+    li.append(p);
+    const opts = make('div','opts');
+    it.o.forEach((txt, k) => {
+      const bt = make('button','opt');
+      bt.type = 'button';
+      bt.append(make('b','',LETTERS[k]), make('span','',txt));
+      bt.onclick = () => {
+        if (li.dataset.state === 'ok' || li.dataset.state === 'shown') return;
+        li.dataset.tried = '1';
+        slot.textContent = txt;
+        if (accepted(it).includes(k)) {
+          li.dataset.state = 'ok';
+          bt.classList.add('ok');
+          slot.dataset.state = 'ok';
+          opts.querySelectorAll('.opt').forEach(x => x.disabled = true);
+        } else {
+          bt.classList.add('bad'); bt.disabled = true;
+          slot.dataset.state = 'bad';
+        }
+        refresh();
+      };
+      opts.append(bt);
+    });
+    li.append(opts);
+    list.append(li);
+  });
+
+  const result = make('p','result');
+  result.setAttribute('aria-live','polite');
+
+  const doCheck = () => {
+    refresh();
+    const s = stats(panel), left = s.total - s.answered;
+    result.textContent = 'You got ' + s.ok + ' of ' + s.total + ' correct' + (left > 0 ? ' · ' + left + ' not answered yet' : '') + '.';
+  };
+  const doShow = () => {
+    list.querySelectorAll('.q').forEach((li, i) => {
+      if (li.dataset.state === 'ok') return;
+      const it = Q[i], acc = accepted(it);
+      li.dataset.state = 'shown';
+      li.querySelectorAll('.opt').forEach((b, k) => { b.disabled = true; b.classList.remove('bad'); b.classList.toggle('shown', acc.includes(k)); });
+      const slot = li.querySelector('.pill');
+      slot.textContent = acc.map(k => it.o[k]).join(' / ');
+      slot.dataset.state = 'shown';
+    });
+    result.textContent = '';
+    refresh();
+  };
+  const doReset = () => { build(); refresh(); window.scrollTo({top:0, behavior:'smooth'}); };
+
+  const top = make('div','bar-row');
+  top.append(make('p','hint','Choose the correct answer. A wrong pick can be tried again.'));
+  const chip = make('span','chip'); chip.dataset.chip = '1';
+  top.append(chip, btn('Show answers','',doShow), btn('Start over','',doReset,ICON_RESET));
+
+  const end = make('div','end-row');
+  const row = make('div','end-btns');
+  row.append(btn('Check answers','main',doCheck), btn('Start over','',doReset,ICON_RESET), btn('Show answers','',doShow));
+  end.append(row, result);
+
+  panel.append(top, list, end);
+}
+
+const CIRC = 2 * Math.PI * 42;
+const bar = $('#bar');
+bar.style.strokeDasharray = CIRC;
+function refresh(){
+  const s = stats(document);
+  $('#score').textContent = s.ok;
+  $('#answered').textContent = s.answered + ' of ' + s.total + ' answered';
+  bar.style.strokeDashoffset = CIRC * (1 - (s.total ? s.ok / s.total : 0));
+  const chip = document.querySelector('[data-chip]');
+  if (chip) chip.textContent = 'Correct ' + s.ok + ' of ' + s.total;
+}
+
+function drawWatermark(){
+  const wm = $('#wm');
+  wm.innerHTML = '';
+  const W = innerWidth, H = innerHeight;
+  const dx = Math.max(210, Math.min(W * 0.34, 320)), dy = Math.max(130, Math.min(H * 0.17, 190));
+  const cols = Math.ceil(W / dx) + 2, rows = Math.ceil(H / dy) + 2;
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let r = -1; r < rows; r++) {
+    for (let c = -1; c < cols; c++) {
+      const s = document.createElement('span');
+      s.lang = 'ar'; s.dir = 'rtl';
+      s.textContent = 'أ. عصام عمايري';
+      s.style.left = (c * dx + (r % 2 ? dx / 2 : 0) + (rnd() - .5) * 40) + 'px';
+      s.style.top = (r * dy + (rnd() - .5) * 30) + 'px';
+      s.style.transform = 'rotate(' + (-20 + (rnd() - .5) * 12).toFixed(1) + 'deg)';
+      wm.append(s);
+    }
+  }
+}
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawWatermark, 200); });
+
+build();
+drawWatermark();
+refresh();
+</script>
+</body>
+</html>
